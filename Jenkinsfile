@@ -40,7 +40,7 @@ pipeline {
                     sh 'mvn clean package'
                     def version = (readFile('pom.xml') =~ '<version>(.+)</version>')[0][2]
                     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
-                    sh "docker build -t learnwithparth/spring-boot:${IMAGE_NAME} ."
+                    sh "docker build -t m076er/spring-boot:${IMAGE_NAME} ."
                         
                     }
             }
@@ -69,7 +69,7 @@ pipeline {
                 script{echo 'deploying the application'
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
                     sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
-                    sh "docker push learnwithparth/spring-boot:${IMAGE_NAME}"
+                    sh "docker push m076er/spring-boot:${IMAGE_NAME}"
                 }}
                 
              }
@@ -78,14 +78,14 @@ pipeline {
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'git-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-                        sh 'git config --global user.email "jenkins@example.com"'
-                        sh 'git config --global user.name "jenkins"'
+                        sh 'git config --global user.email "mitpanh@gmail.com"'
+                        sh 'git config --global user.name "mit076er"'
 
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
 
-                        sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/learnwithparth/springboot-jenkins.git"
+                        sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/mit076er/springboot-jenkins.git"
                         sh 'git add .'
                         sh 'git commit -m "version change"'
                         sh 'git push origin HEAD:jenkins-jobs'
