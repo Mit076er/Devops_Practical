@@ -12,8 +12,12 @@ pipeline {
     }
     
     tools{
-        maven 'maven-3.9.0'
-    }
+         withMaven(maven: 'Maven3.9.0', mavenSettingsConfig: 'maven-settings', jdk: 'JDK8') {
+                    sh 'mvn clean package'
+                    sh 'docker build -t m076er/nginx .'
+                }
+            }
+        }
 
     stages {
 
